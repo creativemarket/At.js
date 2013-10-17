@@ -110,7 +110,6 @@
       @setting  = null
       @query    = null
       @pos      = 0
-      @cur_rect = null
       @range    = null
       $CONTAINER.append @$el = $("<div id='atwho-ground-#{@id}'></div>")
 
@@ -202,12 +201,8 @@
 
       # determine px location of caret
       return if not c = @$inputor.caret('offset', caret_pos, caret_pos_delta)
-      c = (@cur_rect ||= c) || c if @$inputor.attr('contentEditable') == 'true'
       scale_bottom = if document.selection then 0 else 2
       {left: c.left, top: c.top, bottom: c.top + c.height + scale_bottom}
-
-    reset_rect: ->
-      @cur_rect = null if @$inputor.attr('contentEditable') == 'true'
 
     mark_range: ->
       @range = this.get_range() || this.get_ie_range()
@@ -410,7 +405,6 @@
 
     hide: (time) ->
       if isNaN time and this.visible()
-        @context.reset_rect()
         @$el.hide()
       else
         callback = => this.hide()

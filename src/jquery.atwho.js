@@ -143,7 +143,6 @@
         this.setting = null;
         this.query = null;
         this.pos = 0;
-        this.cur_rect = null;
         this.range = null;
         $CONTAINER.append(this.$el = $("<div id='atwho-ground-" + this.id + "'></div>"));
         this.model = new Model(this);
@@ -227,21 +226,12 @@
         if (!(c = this.$inputor.caret('offset', caret_pos, caret_pos_delta))) {
           return;
         }
-        if (this.$inputor.attr('contentEditable') === 'true') {
-          c = (this.cur_rect || (this.cur_rect = c)) || c;
-        }
         scale_bottom = document.selection ? 0 : 2;
         return {
           left: c.left,
           top: c.top,
           bottom: c.top + c.height + scale_bottom
         };
-      };
-
-      Controller.prototype.reset_rect = function() {
-        if (this.$inputor.attr('contentEditable') === 'true') {
-          return this.cur_rect = null;
-        }
       };
 
       Controller.prototype.mark_range = function() {
@@ -493,7 +483,6 @@
         var callback,
           _this = this;
         if (isNaN(time && this.visible())) {
-          this.context.reset_rect();
           return this.$el.hide();
         } else {
           callback = function() {
