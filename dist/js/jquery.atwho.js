@@ -455,7 +455,7 @@
           left: rect.left,
           top: rect.bottom
         };
-        this.$el.offset(offset);
+        this.$el.css(offset);
         return this.context.trigger("reposition", [offset]);
       };
 

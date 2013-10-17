@@ -389,7 +389,7 @@
       if rect.bottom + @$el.height() - $(window).scrollTop() > $(window).height()
           rect.bottom = rect.top - @$el.height()
       offset = {left:rect.left, top:rect.bottom}
-      @$el.offset offset
+      @$el.css offset
       @context.trigger "reposition", [offset]
 
     next: ->
