@@ -191,7 +191,17 @@
     #
     # @return [Hash] the offset which look likes this: {top: y, left: x, bottom: bottom}
     rect: ->
-      return if not c = @$inputor.caret('offset', @pos - 1)
+      caret_pos = @$inputor.caret('pos')
+      caret_pos_delta = -1
+
+      # position dropdown at the "@" character if the
+      # the `dropdown_at_flag` setting is enabled
+      if @setting.dropdown_at_flag
+        subtext = this.content().slice(0, caret_pos)
+        caret_pos_delta -= subtext.length - subtext.lastIndexOf(@at)
+
+      # determine px location of caret
+      return if not c = @$inputor.caret('offset', caret_pos, caret_pos_delta)
       c = (@cur_rect ||= c) || c if @$inputor.attr('contentEditable') == 'true'
       scale_bottom = if document.selection then 0 else 2
       {left: c.left, top: c.top, bottom: c.top + c.height + scale_bottom}

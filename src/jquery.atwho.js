@@ -217,8 +217,14 @@
       };
 
       Controller.prototype.rect = function() {
-        var c, scale_bottom;
-        if (!(c = this.$inputor.caret('offset', this.pos - 1))) {
+        var c, caret_pos, caret_pos_delta, scale_bottom, subtext;
+        caret_pos = this.$inputor.caret('pos');
+        caret_pos_delta = -1;
+        if (this.setting.dropdown_at_flag) {
+          subtext = this.content().slice(0, caret_pos);
+          caret_pos_delta -= subtext.length - subtext.lastIndexOf(this.at);
+        }
+        if (!(c = this.$inputor.caret('offset', caret_pos, caret_pos_delta))) {
           return;
         }
         if (this.$inputor.attr('contentEditable') === 'true') {
