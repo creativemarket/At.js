@@ -197,7 +197,7 @@
       # the `dropdown_at_flag` setting is enabled
       if @setting.dropdown_at_flag
         subtext = this.content().slice(0, caret_pos)
-        caret_pos_delta -= subtext.length - subtext.lastIndexOf(@at)
+        caret_pos_delta = subtext.lastIndexOf(@at) - subtext.length;
 
       # determine px location of caret
       return if not c = @$inputor.caret('offset', caret_pos, caret_pos_delta)

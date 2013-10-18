@@ -221,7 +221,7 @@
         caret_pos_delta = -1;
         if (this.setting.dropdown_at_flag) {
           subtext = this.content().slice(0, caret_pos);
-          caret_pos_delta -= subtext.length - subtext.lastIndexOf(this.at);
+          caret_pos_delta = subtext.lastIndexOf(this.at) - subtext.length;
         }
         if (!(c = this.$inputor.caret('offset', caret_pos, caret_pos_delta))) {
           return;
